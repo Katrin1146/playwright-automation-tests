@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('POST login success', async ({ request }) => {
+test('POST login with invalid password returns wrong password error', async ({ request }) => {
   const response = await request.post('https://api.demoblaze.com/login', {
     data: {
       username: 'testuser',
