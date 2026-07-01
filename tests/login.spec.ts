@@ -34,6 +34,36 @@ test('should login user', async ({ page }) => {
 
 });
 
+test('should show logged in username', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+
+  const username = 'testuser12345679';
+  const password = '123456';
+
+  await loginPage.open();
+  await loginPage.openLoginModal();
+  await loginPage.login(username, password);
+
+  await expect(page.locator('#nameofuser')).toContainText(`Welcome ${username}`);
+});
+
+test('should logout user', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+
+  const username = 'testuser12345679';
+  const password = '123456';
+
+  await loginPage.open();
+  await loginPage.openLoginModal();
+  await loginPage.login(username, password);
+
+  await expect(page.locator('#logout2')).toBeVisible();
+  await page.click('#logout2');
+
+  await expect(page.locator('#login2')).toBeVisible();
+  await expect(page.locator('#logout2')).not.toBeVisible();
+});
+
 
 test('should not login with wrong password', async ({page}) => {
    const loginPage = new LoginPage(page);
